@@ -1,0 +1,4 @@
+clarifai
+streamlit
+Pillow
+requests
