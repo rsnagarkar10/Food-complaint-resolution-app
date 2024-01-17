@@ -10,22 +10,42 @@ import requests
 from PIL import Image, ImageDraw, ImageFont
 
 st.set_page_config(layout="wide")
-
 st.title("Food Complaint Resolution System!")
 
+# 1. Function to choose food item for complaint 
+def chooseFoodItem():
+    global selected_option
+    st.subheader("Please select the item for which you want to raise the complaint:")
+    options = ['Pita Gyro', 'Coke 250 ml', 'Choco chip cookie']
+    selected_option = st.radio("Select an option:", options)
+    st.write(f"You selected: {selected_option}")
+
+# 2. Input description and food images from user
+def takeComplaintImgs():
+    
+    st.subheader(f"Enter your complaint and upload the images of damaged {selected_option}:")
+    description = st.text_area("Enter your complaint:")
+    
+    # Function to Read and Manupilate Image
+    def load_image(img):
+        im = Image.open(img)
+        image = np.array(im)
+        return image
+    
+    uploaded_file = st.file_uploader("Choose a image", type = ['jpg', 'png'])
+    
+    if uploaded_file is not None:   
+        food_item_img = load_image(uploaded_file)
+        st.image(food_item_img)
+        st.write("Image Uploaded Successfully")
+    else:
+        st.write("Please upload the image in jpg or png formate")
+        
 def main():
 
-# Button to choose food item for complaint 
-    st.subheader("Please select the item for which you want to raise the complaint:")
-    # Define a list of options for the multiple-choice button
-    options = ['Pita Gyro', 'Coke 250 ml', 'Choco chip cookie']
-    # Create a radio button for multiple-choice selection
-    selected_option = st.radio("Select an option:", options)
-    # Display the selected option
-    st.write(f"You selected: {selected_option}")
+    chooseFoodItem()    
+    takeComplaintImgs()
     
-    # IMAGE_URL = st.text_input("Paste a Image URL below to get started!", value= "https://s3.amazonaws.com/samples.clarifai.com/black-car.jpg")
-
     # Clarifai Credentials
     with st.sidebar:
         st.subheader('Add your Clarifai PAT.')
