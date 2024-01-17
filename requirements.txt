@@ -2,3 +2,4 @@ clarifai
 streamlit
 Pillow
 requests
+python-dotenv

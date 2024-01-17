@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+from dotenv import load_dotenv
 from clarifai.client.model import Model
 import cv2
 from urllib.request import urlopen
@@ -8,9 +9,17 @@ from clarifai.modules.css import ClarifaiStreamlitCSS
 from io import BytesIO
 import requests
 from PIL import Image, ImageDraw, ImageFont
+from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
+from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
+from clarifai_grpc.grpc.api.status import status_code_pb2
 
 st.set_page_config(layout="wide")
 st.title("Food Complaint Resolution System!")
+
+load_dotenv()
+CLARIFAI_PAT = os.getenv("CLARIFAI_PAT")
+
+
 
 # 1. Function to choose food item for complaint 
 def chooseFoodItem():
@@ -20,31 +29,87 @@ def chooseFoodItem():
     selected_option = st.radio("Select an option:", options)
     st.write(f"You selected: {selected_option}")
 
+
+
 # 2. Input description and food images from user
 def takeComplaintImgs():
     
     st.subheader(f"Enter your complaint and upload the images of damaged {selected_option}:")
     description = st.text_area("Enter your complaint:")
     
-    # Function to Read and Manupilate Image
-    def load_image(img):
-        im = Image.open(img)
-        image = np.array(im)
-        return image
-    
     uploaded_file = st.file_uploader("Choose a image", type = ['jpg', 'png'])
     
     if uploaded_file is not None:   
-        food_item_img = load_image(uploaded_file)
+        food_item_img = uploaded_file.getvalue()
         st.image(food_item_img)
         st.write("Image Uploaded Successfully")
+        return food_item_img
     else:
         st.write("Please upload the image in jpg or png formate")
-        
+
+
+
+# 3. Function to recogonize the Food item from image
+def foodItemRecognition(food_img):
+
+    PAT = CLARIFAI_PAT
+    # Specify the correct user_id/app_id pairings
+    # Since you're making inferences outside your app's scope
+    USER_ID = 'clarifai'
+    APP_ID = 'main'
+    # Change these to whatever model and image URL you want to use
+    MODEL_ID = 'food-item-recognition'
+    MODEL_VERSION_ID = '1d5fd481e0cf4826aa72ec3ff049e044'
+
+    channel = ClarifaiChannel.get_grpc_channel()
+    stub = service_pb2_grpc.V2Stub(channel)
+
+    metadata = (('authorization', 'Key ' + PAT),)
+
+    userDataObject = resources_pb2.UserAppIDSet(user_id=USER_ID, app_id=APP_ID)
+
+    post_model_outputs_response = stub.PostModelOutputs(
+        service_pb2.PostModelOutputsRequest(
+            user_app_id=userDataObject,  # The userDataObject is created in the overview and is required when using a PAT
+            model_id=MODEL_ID,
+            version_id=MODEL_VERSION_ID,  # This is optional. Defaults to the latest model version
+            inputs=[
+                resources_pb2.Input(
+                    data=resources_pb2.Data(
+                        image=resources_pb2.Image(
+                            base64=food_img
+                        )
+                    )
+                )
+            ]
+        ),
+        metadata=metadata
+    )
+    if post_model_outputs_response.status.code != status_code_pb2.SUCCESS:
+        print(post_model_outputs_response.status)
+        raise Exception("Post model outputs failed, status: " + post_model_outputs_response.status.description)
+
+    # Since we have one input, one output will exist here
+    output = post_model_outputs_response.outputs[0]
+
+    food_items = []
+
+    print("Predicted concepts:")
+    for concept in output.data.concepts:
+        print("%s %.2f" % (concept.name, concept.value))
+        if concept.value > 0.10:
+            food_items.append(concept.name)
+    # Uncomment this line to print the full Response JSON
+    # print(output)
+    
+    
+    
+    
 def main():
 
     chooseFoodItem()    
-    takeComplaintImgs()
+    food_img = takeComplaintImgs()
+    foodItemRecognition(food_img)
     
     # Clarifai Credentials
     with st.sidebar:
