@@ -4,14 +4,27 @@ from clarifai.client.model import Model
 import cv2
 from urllib.request import urlopen
 import numpy as np
+from clarifai.modules.css import ClarifaiStreamlitCSS
+from io import BytesIO
+import requests
+from PIL import Image, ImageDraw, ImageFont
 
 st.set_page_config(layout="wide")
 
-st.title("Data Labeling using General Object Detection Model and GPT4 Vision")
+st.title("Food Complaint Resolution System!")
 
 def main():
 
-    IMAGE_URL = st.text_input("Paste a Image URL below to get started!", value= "https://s3.amazonaws.com/samples.clarifai.com/black-car.jpg")
+# Button to choose food item for complaint 
+    st.subheader("Please select the item for which you want to raise the complaint:")
+    # Define a list of options for the multiple-choice button
+    options = ['Pita Gyro', 'Coke 250 ml', 'Choco chip cookie']
+    # Create a radio button for multiple-choice selection
+    selected_option = st.radio("Select an option:", options)
+    # Display the selected option
+    st.write(f"You selected: {selected_option}")
+    
+    # IMAGE_URL = st.text_input("Paste a Image URL below to get started!", value= "https://s3.amazonaws.com/samples.clarifai.com/black-car.jpg")
 
     # Clarifai Credentials
     with st.sidebar:
