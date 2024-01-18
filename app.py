@@ -1,6 +1,5 @@
 import streamlit as st
 import os
-from dotenv import load_dotenv
 from clarifai.client.model import Model
 import cv2
 from urllib.request import urlopen
@@ -9,16 +8,18 @@ from clarifai.modules.css import ClarifaiStreamlitCSS
 from io import BytesIO
 import requests
 from PIL import Image, ImageDraw, ImageFont
+import base64
+from dotenv import load_dotenv
+
 from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
 from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
 from clarifai_grpc.grpc.api.status import status_code_pb2
 
-st.set_page_config(layout="wide")
-st.title("Food Complaint Resolution System!")
-
 load_dotenv()
-CLARIFAI_PAT = os.getenv("CLARIFAI_PAT")
+import os
 
+# Passing the key values
+clarifai_pat = os.getenv("CLARIFAI_PAT")
 
 
 # 1. Function to choose food item for complaint 
@@ -30,12 +31,11 @@ def chooseFoodItem():
     st.write(f"You selected: {selected_option}")
 
 
-
 # 2. Input description and food images from user
 def takeComplaintImgs():
     
     st.subheader(f"Enter your complaint and upload the images of damaged {selected_option}:")
-    description = st.text_area("Enter your complaint:")
+    description = st.text_area("Enter your complaint:", height=100)
     
     uploaded_file = st.file_uploader("Choose a image", type = ['jpg', 'png'])
     
@@ -48,16 +48,13 @@ def takeComplaintImgs():
         st.write("Please upload the image in jpg or png formate")
 
 
-
-# 3. Function to recogonize the Food item from image
+# 5. Recognize the food items in the picture
 def foodItemRecognition(food_img):
 
-    PAT = CLARIFAI_PAT
-    # Specify the correct user_id/app_id pairings
-    # Since you're making inferences outside your app's scope
+    PAT = clarifai_pat
     USER_ID = 'clarifai'
     APP_ID = 'main'
-    # Change these to whatever model and image URL you want to use
+
     MODEL_ID = 'food-item-recognition'
     MODEL_VERSION_ID = '1d5fd481e0cf4826aa72ec3ff049e044'
 
@@ -100,74 +97,44 @@ def foodItemRecognition(food_img):
         if concept.value > 0.10:
             food_items.append(concept.name)
     # Uncomment this line to print the full Response JSON
-    # print(output)
-    
-    
-    
-    
+    print(output)
+
+
+# 6. Using GPT4-Turbo to test the input and image  
+def image_item_test(img_itm_names, input_item_names):
+    prompt = "What’s the future of AI?"
+
+    # Setting the inference parameters
+    inference_params = dict(temperature=0.2, max_tokens=103)
+
+    # Using the model GPT-4-Turbo for predictions
+    # Passing the image-url and inference parameters
+    model_prediction = Model("https://clarifai.com/openai/chat-completion/models/gpt-4-turbo").predict_by_bytes(prompt.encode(), input_type="text", inference_params=inference_params)
+
+    # Output
+    print(model_prediction.outputs[0].data.text.raw)
+
+
 def main():
+    st.set_page_config(page_title="Interactive Media Creator", layout="wide")
+    st.title("Food Complaint Resolution System!")
 
-    chooseFoodItem()    
-    food_img = takeComplaintImgs()
-    foodItemRecognition(food_img)
-    
-    # Clarifai Credentials
     with st.sidebar:
-        st.subheader('Add your Clarifai PAT.')
-        clarifai_pat = st.text_input('Clarifai PAT:', type='password')
-    if not clarifai_pat:
-        st.warning('Please enter your PAT to continue!', icon='⚠️')
-    else:
-        os.environ['CLARIFAI_PAT'] = clarifai_pat
+        chooseFoodItem() 
+        food_item_img = takeComplaintImgs()
+       
 
-        detector_model = Model("https://clarifai.com/clarifai/main/models/objectness-detector")
+    col1, col2 = st.columns(2)
 
-        prediction_response = detector_model.predict_by_url(IMAGE_URL, input_type="image")
+    with col1:
+        st.header("Recognition")
+        foodItemRecognition(food_item_img)
+        
 
-        # Since we have one input, one output will exist here
-        regions = prediction_response.outputs[0].data.regions
+    # with col2:
+    #     st.header("Col # 2")
+    # st.title("Hello")
+       
 
-        model_url = "https://clarifai.com/openai/chat-completion/models/gpt-4-vision"
-        classes = ['Ferrari 812', 'Volkswagen Beetle', 'BMW M5', 'Honda Civic']
-        threshold = 0.99
-
-        req = urlopen(IMAGE_URL)
-        arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
-        img = cv2.imdecode(arr, -1)  # 'Load it as it is'
-
-        for region in regions:
-            # Accessing and rounding the bounding box values
-            top_row = round(region.region_info.bounding_box.top_row, 3)
-            left_col = round(region.region_info.bounding_box.left_col, 3)
-            bottom_row = round(region.region_info.bounding_box.bottom_row, 3)
-            right_col = round(region.region_info.bounding_box.right_col, 3)
-
-            for concept in region.data.concepts:
-                # Accessing and rounding the concept value
-                prompt = f"Label the Car in the Bounding Box region: ({top_row}, {left_col}, {bottom_row}, {right_col}) with one word {classes}"
-
-                inference_params = dict(temperature=0.2, max_tokens=100, image_url=IMAGE_URL)
-
-                # Model Predict
-                model_prediction = Model(model_url).predict_by_bytes(prompt.encode(), input_type="text", inference_params=inference_params)
-
-                concept_name = model_prediction.outputs[0].data.text.raw
-                value = round(concept.value, 4)
-
-                if value > threshold:
-                    # Multipy by axis
-                    top_row = top_row * img.shape[0]
-                    left_col = left_col * img.shape[1]
-                    bottom_row = bottom_row * img.shape[0]
-                    right_col = right_col * img.shape[1]
-
-                    cv2.rectangle(img, (int(left_col), int(top_row)), (int(right_col), int(bottom_row)), (36, 255, 12), 2)
-
-                    # Display text
-                    cv2.putText(img, concept_name, (int(left_col), int(top_row - 10)), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
-                                    (36, 255, 12), 2)
-
-        st.image(img, caption='Image with Label', channels='BGR', use_column_width=True)
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
