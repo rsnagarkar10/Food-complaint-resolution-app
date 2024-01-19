@@ -128,7 +128,9 @@ def main():
 
     with col1:
         st.header("Recognition")
-        foodItemRecognition(food_item_img)
+        if (food_item_img is not None):
+            foodItemRecognition(food_item_img)
+        
         
 
     # with col2:
