@@ -10,8 +10,9 @@ from clarifai_grpc.grpc.api.status import status_code_pb2
 
 load_dotenv()
 import os
-
-# Passing the key values
+if "items" not in st.session_state:
+    st.session_state["items"] = 0
+# Passing the API keys
 clarifai_pat = os.getenv("CLARIFAI_PAT")
 
 # 1.Choose Category 
@@ -21,7 +22,7 @@ def chooseFoodItem():
     return selected_option
 
 
-# 2. Input description and food images from user
+# 2. Input food images from user
 def takeImage():
     uploaded_file = st.file_uploader("Choose a image", type = ['jpg', 'png'])
     
@@ -32,7 +33,7 @@ def takeImage():
         return food_item_img
 
 
-# 5. Recognize the food items in the picture
+# 3. Recognize the food items in the picture
 def foodItemRecognition(food_img):
 
     PAT = clarifai_pat
@@ -68,7 +69,7 @@ def foodItemRecognition(food_img):
     )
     if post_model_outputs_response.status.code != status_code_pb2.SUCCESS:
         print(post_model_outputs_response.status)
-        # raise Exception("Post model outputs failed, status: " + post_model_outputs_response.status.description)
+        raise Exception("Post model outputs failed, status: " + post_model_outputs_response.status.description)
 
     # Since we have one input, one output will exist here
     output = post_model_outputs_response.outputs[0]
@@ -83,7 +84,8 @@ def foodItemRecognition(food_img):
     return food_items
 
 
-# 6. Using GPT4-Turbo to test the input and image  
+
+# 4. Using GPT4-Turbo to validate the selected item and recognized items 
 def item_test(item_category, input_item_names):
 
     prompt = f"You are an expert cook. I have passed you an array of food items {input_item_names} and a category{item_category}, tell me if any of the food item in the list is used in the creation of the category item. If any food item can be used to make the category item, return a yes. Please give ouptput in boolean form. only use 1 or 0."
@@ -100,7 +102,9 @@ def item_test(item_category, input_item_names):
     else:
         return False
 
-# 
+
+
+# 5 Using Gpt-4 vision to get cashback after analyzing the image and description of complaint
 def cashBack(image, description):
 
     prompt = f"Does the image match the description as provided by the user, \
@@ -121,6 +125,8 @@ def cashBack(image, description):
     print(model_prediction.outputs[0].data.text.raw)
 
     return model_prediction.outputs[0].data.text.raw
+
+
 
 def main():
     st.set_page_config(page_title="Food Complaint System", layout="wide")
@@ -145,8 +151,6 @@ def main():
 
     with col1:
         
-        tries = 0
-
         st.header("Recognition")
         if (selected_category is not None and description is not None and food_item_img is not None):
             st.image(food_item_img)
@@ -161,14 +165,14 @@ def main():
                     flag = True
                 else:
                     st.error("Could not recognize. Please enter your image again")
-                    tries += 1
-                    print("Try incremented: ", tries)
-                    st.write(tries)
+                    st.session_state["items"] = st.session_state["items"] + 1
+                    st.write(st.session_state["items"])
 
 
     with col2:
         st.header("Output")
-        if tries >= 4:
+        tries = int(st.session_state["items"])
+        if tries >= 2:
             st.write("We'll make sure to send you an agent.")
         if flag:
             with st.spinner("Calculating Cashback..."):
