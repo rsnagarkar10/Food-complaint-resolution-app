@@ -1,5 +1,5 @@
-# Project Name + logo
-
+# Food Complaint Resolution System
+![App logo](https://onedrive.live.com/?cid=71A913BEBE4FEB4F&id=71A913BEBE4FEB4F%21182&parId=71A913BEBE4FEB4F%21107&o=OneUp)
 
 # Clarifai App Module Template
 
