@@ -1,5 +1,5 @@
 # Food Complaint Resolution System
-![App logo](https://onedrive.live.com/?cid=71A913BEBE4FEB4F&id=71A913BEBE4FEB4F%21182&parId=71A913BEBE4FEB4F%21107&o=OneUp)
+![App logo](https://cdn.discordapp.com/attachments/1194656605648719937/1198287473852301383/image.png?ex=65be5b2c&is=65abe62c&hm=b6e6a4696602cd4fd21fbaeb87c66ddcf007b345cc69c1fedd7e11151a55ca23&)
 
 # Clarifai App Module Template
 
