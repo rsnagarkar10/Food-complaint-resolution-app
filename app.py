@@ -100,16 +100,15 @@ def foodItemRecognition(food_img, clarifai_pat):
 
 
 
-# 4. Using GPT4-Turbo to validate the selected item and recognized items 
+# 4. Using GPT4-Turbo to extract food-item names from the image
 def item_test(item_category, input_item_names):
 
-    prompt = f"You are an expert cook. I have passed you an array of food items {input_item_names} and a category{item_category}, tell me if any of the food item in the list is used in the creation of the category item. If any food item can be used to make the category item, return a yes. Please give ouptput in boolean form. only use 1 or 0."
+    prompt = f"You are an expert cook. I have passed you an array of food items {input_item_names} and a category{item_category}, tell me if any of the food item in the list is used in the creation of the category item. If any of the food items could be used to make the category item in any way, return a yes. Please give ouptput in boolean form. only use 1 or 0."
 
     # Setting the inference parameters
     inference_params = dict(temperature=0.2, max_tokens=103)
 
     # Using the model GPT-4-Turbo for predictions
-    # Passing the image-url and inference parameters
     model_prediction = Model("https://clarifai.com/openai/chat-completion/models/gpt-4-turbo").predict_by_bytes(prompt.encode(), input_type="text", inference_params=inference_params)
 
     if (model_prediction.outputs[0].data.text.raw) == '1':
@@ -119,17 +118,19 @@ def item_test(item_category, input_item_names):
 
 
 
-# 5 Using Gpt-4 vision to get cashback after analyzing the image and description of complaint
+# 5 Using Gpt-4 vision to get cashback
 def cashBack(image, description):
 
-    prompt = f"Does the image match the description as provided by the user, \
+    prompt = "Does the image {image} match the description as provided by the user, \
     Description: {description}, \
-    list = ['You have been offered 100% cashback','You have been offered 80% cashback','Please provide another image of damaged food parcel or food']\
-    1 = If the image match the discription answer for this as yes and no, \
-    If the description matches and it's highly damaged then put 2 = 1st element in 'list',\
-    If the description matches and it's lightly damaged then put 2 = 2st element in 'list',\
-    If the food parcel is not damaged in the image then put 2 = 3rd element in the 'list',\
-    Generate only a list with two elements: [1, 2] where 1 and 2 comes from above"
+    list = ['Sorry! your complaint seems invalid, We are reffering you to our customer support executive','You have been offered 60% cashback', 'You have been offered 30% cashback', 'Please provide another image of damaged food parcel or food']  \
+    If the image doesn't match the description put 1 = 4th list element \
+    else \
+    If the description matches and food's highly damaged then put 1 = 2nd element in 'list',\
+    If food's lightly damaged then put 1 = 3rd element in 'list',\
+    If the food parcel is not damaged in the image then put 1 = 4th element in the 'list',\
+    If the description seems invalid put 1 = 1st element in list , \
+    generate just the string, no other symbol."
 
     base64image = base64.b64encode(image).decode('utf-8')
 
@@ -137,7 +138,7 @@ def cashBack(image, description):
 
     model_prediction = Model("https://clarifai.com/openai/chat-completion/models/gpt-4-vision").predict_by_bytes(prompt.encode(), input_type="text", inference_params=inference_params)
 
-    print(model_prediction.outputs[0].data.text.raw)
+    # print(model_prediction.outputs[0].data.text.raw)
 
     return model_prediction.outputs[0].data.text.raw
 
@@ -153,7 +154,7 @@ def main():
 
         description = st.text_area("Enter your complaint:", height=100)
         if description:
-            st.success(f"Your complaint has been filed.")
+            st.success(f"Input successful.")
     
         food_item_img = takeImage()
 
@@ -164,7 +165,6 @@ def main():
     col1, col2 = st.columns(2)
     flag = False
     
-
     with col1:
         st.header("Recognition")
         if (selected_category is not None and description is not None and food_item_img is not None):
@@ -176,7 +176,7 @@ def main():
                 match = bool(item_test(selected_category,  food_items))
 
                 if match:
-                    st.success("Image Recognized!")
+                    st.success("Complaint Upheld!")
                     flag = True
                 else:
                     st.error("Could not recognize. Please enter your image again")
@@ -187,8 +187,8 @@ def main():
     with col2:
         st.header("Output")
         tries = int(st.session_state["items"])
-        if tries >= 2:
-            st.write("We'll make sure to send you an agent.")
+        if tries >= 4:
+            st.write("You've exceed the limit of minimum tries. Please refer with the customer support executive")
         if flag:
             with st.spinner("Calculating Cashback..."):
                 output = cashBack(food_item_img, description)
@@ -196,6 +196,5 @@ def main():
                     st.success(f"{output}")
         
     
-
 if __name__ == "__main__":
     main()
