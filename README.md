@@ -1,13 +1,26 @@
-# Food Complaint Resolution System
-<img src="https://cdn.discordapp.com/attachments/1194656605648719937/1198287473852301383/image.png?ex=65be5b2c&is=65abe62c&hm=b6e6a4696602cd4fd21fbaeb87c66ddcf007b345cc69c1fedd7e11151a55ca23&" alt="App logo" style="width:200px;"/>
+<div style="display:flex;"> 
 
-# Clarifai App Module Template
+<h1 style="margin:auto"> Food Complaint Resolution System</h1>
 
-![Clarifai logo](https://www.clarifai.com/hs-fs/hubfs/logo/Clarifai/clarifai-740x150.png?width=240)
+<img src="https://cdn.discordapp.com/attachments/1194656605648719937/1198287473852301383/image.png?ex=65be5b2c&is=65abe62c&hm=b6e6a4696602cd4fd21fbaeb87c66ddcf007b345cc69c1fedd7e11151a55ca23&" alt="App logo" style="width:200px; margin-left:20px;"/>
+
+</div>
 
 ## Introduction
 
-This is a template repository to make it easy to get started creating a UI module with Clarifai.
+Food Complaint Resolution System, powered by the cutting-edge synergy of GPT-4 Turbo, GPT-4 Vision, and a Language Model (LLM) in collaboration with Clarifai, is not just an app; it's your ultimate ally in culinary satisfaction. 
+- Ever faced a dining dilemma or encountered a dish that didn't quite meet your expectations? 
+Fret not! 
+- Our streamlit application revolutionizes the way you express food complaints by seamlessly integrating language understanding and visual analysis. Simply submit your grievance, accompanied by a snapshot of the culinary hiccup, and let the advanced AI algorithms work their magic. Our App not only listens to your concerns but goes a step further, offering personalized resolutions in the form of enticing cashbacks or discounts.
+
+<div style="display:flex;"> 
+
+# Clarifai
+<!-- <h1 style="margin:auto"> Clarifai </h1> -->
+
+<img src="https://www.clarifai.com/hs-fs/hubfs/logo/Clarifai/clarifai-740x150.png?width=240" alt="Clarifai logo" style="width:200px; margin:auto 50px;"/>
+
+</div>
 
 ## Installation
 
@@ -32,21 +45,17 @@ To install and run the Clarifai module locally, follow these steps:
     ```
 
 ## Features
-    - Using AI for receiving the complaint reducing the human effort and time
-    - User can select the item, write description and upload images of food for complaint
-    - Complain will only be processed when user will provide all the required inputs
-    - Using the *Food Item Recognition* model to recognize the food items in the image
-    - GPT4-Turbo is used to validating the selected category and image entered
-    - GPT4-vision model analyzes the description
-    - Cashback or discount provided based on company's rules and regulations
-    - User friendly interface for complaint submission
-    - A maximum try limit has been set
-    - Once the limit gets exceeded, user'll have to refer to the restaurant's management
+- Using AI for receiving the complaint reducing the human effort and time
+- User can select the item, write description and upload images of food for complaint
+- Complain will only be processed when user will provide all the required inputs
+- Using the *Food Item Recognition* model to recognize the food items in the image
+- GPT4-Turbo is used to validating the selected category and image entered
+- GPT4-vision model analyzes the description
+- Cashback or discount provided based on company's rules and regulations
+- User friendly interface for complaint submission
+- A maximum try limit has been set
+- Once the limit gets exceeded, user'll have to refer to the restaurant's management
 <!-- Add your features here -->
-
-## Usage
-    Food-complaint-resolution uses the streamlit library to provide user ease to complain about the food he received. User can easily select the choice for which he wants to raise the complaint, write the complaint and upload the photos of food. When user will done with entering information our system automatically will use that information to process the user complaint. User can see his complaint is processing, stage and reply (%ag of cashback return to user or not) of complaint from our system. After max tries if user is not satisfied with the reply then our system will redirect the user to human. 
-<!-- Add usage information here -->
 
 ## Contributing
 
