@@ -10,10 +10,25 @@ from clarifai_grpc.grpc.api.status import status_code_pb2
 
 load_dotenv()
 import os
+
 if "items" not in st.session_state:
     st.session_state["items"] = 0
-# Passing the API keys
-clarifai_pat = os.getenv("CLARIFAI_PAT")
+
+
+# Function to get clarifai PAT 
+def getKey():
+    clarifai_pat_env = os.getenv("CLARIFAI_PAT")
+    clarifai_pat_usr = st.text_input('Clarifai PAT:', type='password')
+        
+    if clarifai_pat_env:
+        pat = clarifai_pat_env
+    elif clarifai_pat_usr:
+        os.environ['CLARIFAI_PAT'] = clarifai_pat_usr
+    else:
+        st.warning('Please enter your PAT to continue!', icon='⚠️')
+    return pat
+
+
 
 # 1.Choose Category 
 def chooseFoodItem():
@@ -34,7 +49,7 @@ def takeImage():
 
 
 # 3. Recognize the food items in the picture
-def foodItemRecognition(food_img):
+def foodItemRecognition(food_img, clarifai_pat):
 
     PAT = clarifai_pat
     USER_ID = 'clarifai'
@@ -131,8 +146,9 @@ def cashBack(image, description):
 def main():
     st.set_page_config(page_title="Food Complaint System", layout="wide")
     st.title("Food Complaint Resolution")
-
     with st.sidebar:
+        
+        clarifai_pat = getKey()       
         selected_category = chooseFoodItem() 
 
         description = st.text_area("Enter your complaint:", height=100)
@@ -150,13 +166,12 @@ def main():
     
 
     with col1:
-        
         st.header("Recognition")
         if (selected_category is not None and description is not None and food_item_img is not None):
             st.image(food_item_img)
             
             with st.spinner("Processing your request..."):
-                food_items = foodItemRecognition(food_item_img)
+                food_items = foodItemRecognition(food_item_img, clarifai_pat)
 
                 match = bool(item_test(selected_category,  food_items))
 
