@@ -22,11 +22,11 @@ def getKey():
         
     if clarifai_pat_env:
         pat = clarifai_pat_env
+        return pat
     elif clarifai_pat_usr:
         os.environ['CLARIFAI_PAT'] = clarifai_pat_usr
     else:
         st.warning('Please enter your PAT to continue!', icon='⚠️')
-    return pat
 
 
 
