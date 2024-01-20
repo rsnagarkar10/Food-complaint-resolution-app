@@ -1,5 +1,5 @@
 # Food Complaint Resolution System
-![App logo](https://cdn.discordapp.com/attachments/1194656605648719937/1198287473852301383/image.png?ex=65be5b2c&is=65abe62c&hm=b6e6a4696602cd4fd21fbaeb87c66ddcf007b345cc69c1fedd7e11151a55ca23&)
+<img src="https://cdn.discordapp.com/attachments/1194656605648719937/1198287473852301383/image.png?ex=65be5b2c&is=65abe62c&hm=b6e6a4696602cd4fd21fbaeb87c66ddcf007b345cc69c1fedd7e11151a55ca23&" alt="App logo" style="width:200px;"/>
 
 # Clarifai App Module Template
 
