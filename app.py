@@ -32,8 +32,8 @@ def getKey():
 
 # 1.Choose Category 
 def chooseFoodItem():
-    options = ['Pita Gyro', 'Coke 250 ml', 'Choco chip cookie', 'ice cream']
-    selected_option = st.radio("Select an option:", options, index=None)
+    options = ['Pita Gyro', 'Pasta', 'Pizza', 'Cake']
+    selected_option = st.radio("Select a food item:", options, index=None)
     return selected_option
 
 
@@ -94,6 +94,7 @@ def foodItemRecognition(food_img, clarifai_pat):
     for concept in output.data.concepts:
         # print("%s %.2f" % (concept.name, concept.value))
         food_items.append(concept.name)
+
     print(food_items)
 
     return food_items
@@ -110,7 +111,8 @@ def item_test(item_category, input_item_names):
 
     # Using the model GPT-4-Turbo for predictions
     model_prediction = Model("https://clarifai.com/openai/chat-completion/models/gpt-4-turbo").predict_by_bytes(prompt.encode(), input_type="text", inference_params=inference_params)
-    print(model_prediction.outputs[0].data.text.raw)
+
+    print("Image matched with the Category? ", bool(model_prediction.outputs[0].data.text.raw))
     if (model_prediction.outputs[0].data.text.raw) == '1':
         return True
     else:
@@ -123,13 +125,13 @@ def cashBack(image, description):
 
     prompt = "Does the image {image} match the description as provided by the user, \
     Description: {description}, \
-    list = ['Sorry! your complaint seems invalid, We are reffering you to our customer support executive','You have been offered 60% cashback', 'You have been offered 30% cashback', 'Please provide another image of damaged food parcel or food']  \
+    list = ['Sorry! Our AI is unable to match the description with the image. Please try with a different description and image.','You have been offered 60% cashback.', 'You have been offered 30% cashback.', 'Please provide another image of damaged food parcel or food.']  \
     If the image doesn't match the description put 1 = 4th list element \
     else \
+    If the description seems invalid put 1 = 1st element in list , \
     If the description matches and food's highly damaged then put 1 = 2nd element in 'list',\
     If food's lightly damaged then put 1 = 3rd element in 'list',\
-    If the food parcel is not damaged in the image then put 1 = 4th element in the 'list',\
-    If the description seems invalid put 1 = 1st element in list , \
+    If the food in the picture or the food parcel is not damaged in the image then put 1 = 4th element in the 'list',\
     generate just the string, no other symbol."
 
     base64image = base64.b64encode(image).decode('utf-8')
@@ -138,7 +140,7 @@ def cashBack(image, description):
 
     model_prediction = Model("https://clarifai.com/openai/chat-completion/models/gpt-4-vision").predict_by_bytes(prompt.encode(), input_type="text", inference_params=inference_params)
 
-    # print(model_prediction.outputs[0].data.text.raw)
+    # print("Output: ", model_prediction.outputs[0].data.text.raw)
 
     return model_prediction.outputs[0].data.text.raw
 
@@ -176,19 +178,19 @@ def main():
                 match = bool(item_test(selected_category,  food_items))
 
                 if match:
-                    st.success("Complaint Upheld!")
+                    st.success("Image matched with the category, Complaint Upheld!")
                     flag = True
                 else:
-                    st.error("Could not recognize. Please enter your image again")
+                    st.error("Could not recognize. Please upload another image.")
                     st.session_state["items"] = st.session_state["items"] + 1
-                    st.write(st.session_state["items"])
+                    # st.write(st.session_state["items"])
 
 
     with col2:
         st.header("Output")
         tries = int(st.session_state["items"])
         if tries >= 4:
-            st.write("You've exceed the limit of minimum tries. Please refer with the customer support executive")
+            st.write("Sorry! Our AI is unable to help you. We'll refer you to our customer support agent.")
         if flag:
             with st.spinner("Calculating Cashback..."):
                 output = cashBack(food_item_img, description)
