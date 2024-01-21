@@ -1,5 +1,5 @@
-[![Streamlit](https://img.shields.io/badge/built%20with-Streamlit-brightgreen)](https://www.streamlit.io/)
-[![Clarifai](https://img.shields.io/badge/Clarifai-clarifai-blue)](https://www.clarifai.com/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.30.0-brightgreen)](https://www.streamlit.io/)
+[![Clarifai](https://img.shields.io/badge/Clarifai-9.10.4-blue)](https://www.clarifai.com/)
 [![Python](https://img.shields.io/badge/Python-3.11.3-blue)](https://www.python.org/)
 
 # Food Complaint Resolution
@@ -72,7 +72,7 @@ To install and run Food Complaint Resolution locally, follow these steps:
 <br>Make sure to update the .env_example with your CLARIFAI_PAT or provide PAT through UI on application
     ```bash
         cd pages
-        streamlit run first_page.py
+        streamlit run app.py
     
     ```
 
