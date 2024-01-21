@@ -4,7 +4,7 @@
 
 # Food Complaint Resolution
 <p align="center">
-  <a href="https://github.com/rsnagarkar10/Food-complaint-resolution-app"><img src="images/logo2.png" alt="logo.svg" height="200" width = "200"/></a>
+  <a href="https://github.com/rsnagarkar10/Food-complaint-resolution-app"><img src="images/assets/logo.png" alt="logo.svg" height="200" width = "200"/></a>
 </p>
 
 
@@ -20,7 +20,7 @@
 
 <!-- ![](/images/cover.png) -->
 <p align="center">
-  <img src="images/cover.png" alt="cover.png" width = "600" height = "500">
+  <img src="images/assets/cover.png" alt="cover.png" width = "600" height = "500">
 </p>
 
 Food-complaint-resolution application is an AI based customer complaint system with market specific to the food delivery companies. Although many food delivery companies have customer complaint system and which requires the involvement of human to handle the complaint for their customers.<br>
@@ -57,7 +57,7 @@ To install and run Food Complaint Resolution locally, follow these steps:
 1. **Clone the Repository:**
 
     ```bash
-    git clone https://github.com/rsnagarkar10/Clarifai_ai_project.git
+    git clone https://github.com/rsnagarkar10/Food-complaint-resolution-app.git
 
     ```
 
@@ -71,8 +71,7 @@ To install and run Food Complaint Resolution locally, follow these steps:
 3. **Run the Application**
 <br>Make sure to update the .env_example with your CLARIFAI_PAT or provide PAT through UI on application
     ```bash
-        cd pages
-        streamlit run first_page.py
+        streamlit run app.py
     
     ```
 
@@ -111,4 +110,4 @@ This software is written by the mutual effort of diverse team members :
 [Ayesha Mehmood](https://www.linkedin.com/in/ayesha-mehmood-9264a228b/) and
 [Usman Ali](https://www.linkedin.com/in/usmaneali/).
 
-Also, thanks to all [contributors](https://github.com/rsnagarkar10/Food-complaint-resolution-app/graphs/contributors) to the software.
+Also, thanks to all [contributors](https://github.com/rsnagarkar10/Food-complaint-resolution-app/graphs/contributors) of the software.
