@@ -42,7 +42,6 @@ This system processes the application just like a human evaluates the complaint 
     - User friendly interface for complaint submission
     - A maximum try limit has been set
     - Once the limit gets exceeded, user'll have to refer to the restaurant's management
-You can read more about the project and see a demo [here](/).
 
 ### Built with
 * [Clarifai's streamlit module](https://github.com/clarifai/module-template) - a template for creating a UI module with Clarifai using streamlit 
@@ -79,6 +78,11 @@ To install and run Food Complaint Resolution locally, follow these steps:
 Food-complaint-resolution uses the streamlit library to provide user ease to complain about the food he received. User can easily select the choice for which he wants to raise the complaint, write the complaint and upload the photos of food. When user will done with entering information our system automatically will use that information to process the user complaint. User can see his complaint is processing, stage and reply (%ag of cashback return to user or not) of complaint from our system. After max tries if user is not satisfied with the reply then our system will redirect the user to human. 
 
 ### Visuals
+![](/images/assets/app_tour.png)
+As the user will fill all input fields then processing will start:
+![](/images/assets/Input.png)
+After Processing done user can see the results:
+![](/images/assets/output.png)
 
 ### Where to ask for help?
 Open a discussion or stop by our [discord](https://discord.gg/n58UfpCX) server
@@ -111,3 +115,6 @@ This software is written by the mutual effort of diverse team members :
 [Usman Ali](https://www.linkedin.com/in/usmaneali/).
 
 Also, thanks to all [contributors](https://github.com/rsnagarkar10/Food-complaint-resolution-app/graphs/contributors) of the software.
+
+### Demo
+See the demo [here](/).
