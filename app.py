@@ -5,6 +5,7 @@ from clarifai.client.model import Model
 import base64
 from dotenv import load_dotenv
 
+# Import Clarifai gRPC components
 from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
 from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
 from clarifai_grpc.grpc.api.status import status_code_pb2
