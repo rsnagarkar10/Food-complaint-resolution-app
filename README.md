@@ -119,4 +119,4 @@ This software is written by the mutual effort of diverse team members :
 Also, thanks to all [contributors](https://github.com/rsnagarkar10/Food-complaint-resolution-app/graphs/contributors) of the software.
 
 ### Demo
-See the demo [here](/).
+See the demo [here](https://clarifai.com/inam09/Food_Complaint_Resolution/installed_module_versions/customer-complaint-handler).
