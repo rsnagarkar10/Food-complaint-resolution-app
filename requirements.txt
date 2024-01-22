@@ -1,4 +1,4 @@
-clarifai
-streamlit
-python-dotenv
+Clarifai
+Streamlit
+Python-dotenv
 Pillow
