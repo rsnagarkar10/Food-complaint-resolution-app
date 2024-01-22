@@ -23,15 +23,15 @@
   <img src="images/assets/cover.png" alt="cover.png" width = "600" height = "500">
 </p>
 
-The Food Complaint Resolution application is an AI-based system designed for customer complaints specific to food delivery companies. While many such companies already have a customer complaint system, it often involves humans in handling customer issues.
+The food complaint resolution application is an AI-based customer complaint system tailored to the food delivery industry. While many food delivery companies already have a customer complaint system, it typically involves human intervention to address customer concerns.
 
-For instance, if a customer orders pita bread and receives an expired one, filing a complaint means a human has to check it later. The human evaluates the complaint using metadata like images and descriptions. If the complaint is valid, the customer gets a cash refund. This process is time-consuming and depends on the availability of human resources.
+For instance, if a customer orders pita bread and receives expired bread, filing a complaint triggers a human review process. The human evaluator assesses the complaint using metadata such as images of the bread and the complaint description. Following this evaluation, the customer may be reimbursed if the human determines that the delivered pita bread was indeed expired. However, this manual process is time-consuming and dependent on the availability of human personnel.
 
-Our Food Complaint Resolution application streamlines this process, reducing both time and human effort in handling complaints. It processes customer complaints in just a few seconds, providing a quicker resolution.
+By utilizing the food complaint resolution application, a food delivery company can significantly reduce processing time and human effort in handling complaints. The application can swiftly process customer complaints in a matter of seconds, streamlining the resolution process.
 
-We developed this application with ❤️ using the latest AI models, including Food Item Recognition, GPT-4 Turbo, and GPT-4 Vision, to automate complaint resolution. The system features a user-friendly interface created with the Streamlit library.
+We developed this application with ❤️, incorporating state-of-the-art AI models such as Food Item recognition, GPT-4 Turbo, and GPT-4 vision to automate complaint resolution. The user-friendly interface, created using the Streamlit library, ensures a seamless experience for users.
 
-The application processes complaints similarly to how a human would, evaluating metadata like complaint descriptions and images. After analyzing the information, our system follows company policies to provide a cash refund to eligible customers. If the customer is dissatisfied with the refund or after multiple attempts, the system redirects the complaint to a human for further assistance.
+The system mimics human evaluation by processing complaints based on metadata like complaint descriptions and images. After analyzing the information provided by the customer, our system adheres to company policies to provide cash back to eligible customers. If a customer remains dissatisfied with the cash back or after reaching the maximum attempts, the system redirects the complaint to human intervention.
 
 ### Features
     - Using AI for receiving the complaint reducing the human effort and time
