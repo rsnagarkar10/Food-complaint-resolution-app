@@ -11,7 +11,7 @@
 #
 
 <p align="center">
-  <strong>User Friendly AI-Driven Food Delivery Complaint System</strong>
+  <strong> User-Friendly AI-Driven Food Delivery Complaint System</strong>
 </p>
 
 ![GitHub Stars](https://img.shields.io/github/stars/rsnagarkar10/Clarifai_ai_project?style=social)
@@ -25,30 +25,30 @@
 
 The food complaint resolution application is an AI-based customer complaint system tailored to the food delivery industry. While many food delivery companies already have a customer complaint system, it typically involves human intervention to address customer concerns.
 
-For instance, if a customer orders pita bread and receives expired bread, filing a complaint triggers a human review process. The human evaluator assesses the complaint using metadata such as images of the bread and the complaint description. Following this evaluation, the customer may be reimbursed if the human determines that the delivered pita bread was indeed expired. However, this manual process is time-consuming and dependent on the availability of human personnel.
+For instance, if a customer orders pita bread and receives expired bread, filing a complaint triggers a human review process. The human evaluator assesses the complaint using metadata such as images of the bread and the complaint description. Following this evaluation, the customer may be reimbursed if the human determines that the delivered pita bread has indeed expired. However, this manual process is time-consuming and dependent on the availability of human personnel.
 
 By utilizing the food complaint resolution application, a food delivery company can significantly reduce processing time and human effort in handling complaints. The application can swiftly process customer complaints in a matter of seconds, streamlining the resolution process.
 
 We developed this application with ❤️, incorporating state-of-the-art AI models such as Food Item recognition, GPT-4 Turbo, and GPT-4 vision to automate complaint resolution. The user-friendly interface, created using the Streamlit library, ensures a seamless experience for users.
 
-The system mimics human evaluation by processing complaints based on metadata like complaint descriptions and images. After analyzing the information provided by the customer, our system adheres to company policies to provide cash back to eligible customers. If a customer remains dissatisfied with the cash back or after reaching the maximum attempts, the system redirects the complaint to human intervention.
+The system mimics human evaluation by processing complaints based on metadata like complaint descriptions and images. After analyzing the information provided by the customer, our system adheres to company policies to provide cash back to eligible customers. If a customer remains dissatisfied with the refund or after reaching the maximum attempts, the system redirects the complaint to human intervention.
 
 ### Features
-    - Using AI for receiving the complaint reducing the human effort and time
-    - User can select the item, write description and upload images of food for complaint
-    - Complain will only be processed when user will provide all the required inputs
+    - Using AI for receiving complaints reduces human effort and time
+    - User can select the item, write a description, and upload images of food for complaint
+    - Complaint will only be processed when the user provides all the required inputs
     - Using the *Food Item Recognition* model to recognize the food items in the image
-    - GPT4-Turbo is used to validating the selected category and image entered
+    - GPT4-Turbo is used to validate the selected category and image entered
     - GPT4-vision model analyzes the description
-    - Cashback or discount provided based on company's rules and regulations
-    - User friendly interface for complaint submission
+    - Cashback or discount provided based on the company's rules and regulations
+    - User-friendly interface for complaint submission
     - A maximum try limit has been set
-    - Once the limit gets exceeded, user'll have to refer to the restaurant's management
+    - Once the limit is exceeded, the user will be referred to a human agent for better understanding and resolution.
 
 ### Built with
 * [Clarifai's streamlit module](https://github.com/clarifai/module-template) - a template for creating a UI module with Clarifai using streamlit 
 * [Food Item Recognition](https://clarifai.com/clarifai/main/models/food-item-recognition) - AI model for recognizing a wide variety of food items in images
-* [GPT-4 Turbo](https://clarifai.com/openai/chat-completion/models/gpt-4-turbo) - is an advanced language model (llm)
+* [GPT-4 Turbo](https://clarifai.com/openai/chat-completion/models/gpt-4-turbo) - is an advanced language model (LLM)
 * [GPT-4 vision](https://clarifai.com/openai/chat-completion/models/gpt-4-vision) - extends GPT-4's capabilities that can understand and answer questions about images
 
 ## Installation
@@ -77,13 +77,13 @@ To install and run Food Complaint Resolution locally, follow these steps:
     ```
 
 ## Usage
-Food-complaint-resolution uses the streamlit library to provide user ease to complain about the food he received. User can easily select the choice for which he wants to raise the complaint, write the complaint and upload the photos of food. When user will done with entering information our system automatically will use that information to process the user complaint. User can see his complaint is processing, stage and reply (%ag of cashback return to user or not) of complaint from our system. After max tries if user is not satisfied with the reply then our system will redirect the user to human. 
+Food Complaint Resolution simplifies the complaint process using the streamlit library. Users select their issue, share details, and upload photos. Our system swiftly processes complaints, providing real-time updates on the processing stage and response (% cashback). After maximum attempts, if unsatisfied, users are redirected to human intervention. Efficient and user-friendly, it blends automated resolution with personalized human assistance. 
 
 ### Visuals
 ![](/images/assets/app_tour.png)
-As the user will fill all input fields then processing will start:
+As the user fills in all input fields the processing will start:
 ![](/images/assets/Input.png)
-After Processing done user can see the results:
+After Processing is done user can see the results:
 ![](/images/assets/output.png)
 
 ### Where to ask for help?
@@ -93,7 +93,7 @@ Open a discussion or stop by our [discord](https://discord.gg/n58UfpCX) server
 
 Contributions are what make the open-source community an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-To contribute to Food Complaint Resolution App, 
+To contribute to the Food Complaint Resolution App, 
 
 Clone this repo locally and commit your code on a separate branch.
 If you're making core changes please write unit tests for your code, and check that everything works by running the following before opening a pull-request
