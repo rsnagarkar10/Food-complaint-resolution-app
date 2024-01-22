@@ -23,13 +23,15 @@
   <img src="images/assets/cover.png" alt="cover.png" width = "600" height = "500">
 </p>
 
-Food-complaint-resolution application is an AI based customer complaint system with market specific to the food delivery companies. Although many food delivery companies have customer complaint system and which requires the involvement of human to handle the complaint for their customers.<br>
-For example a customer ordered the pita bread and he received the pita bread expired and when he will do complain, after some time a human will check the complain, he will evaluate the compalint based on metadata like images of bread and compalint description. After that customer will be given the cash back if human see pit bread was delivery to customer was really expired. This is time consuming, may be human is not available at currently and takes the human effort. 
+The Food Complaint Resolution application is an AI-based system designed for customer complaints specific to food delivery companies. While many such companies already have a customer complaint system, it often involves humans in handling customer issues.
 
-Using food complaint resolution application a food delivery company can reduce time and human effort to process the complaint. It will take  hardly take the few seconds to process the complaint of customer thus reducing the time and human effort involved. 
+For instance, if a customer orders pita bread and receives an expired one, filing a complaint means a human has to check it later. The human evaluates the complaint using metadata like images and descriptions. If the complaint is valid, the customer gets a cash refund. This process is time-consuming and depends on the availability of human resources.
 
-We developed with ❤️ using the latest AI models Food Item recognition, GPT-4 Turbo and GPT-4 vision to automate the customer complaint reducing. We have provided the user friendly interface using the streamlit library.<br>
-This system processes the application just like a human evaluates the complaint based on metadata like complaint description and images. After evaluating the information provided by customer, our system gives the cash back based on company policies if customer is eligible for cash back. In case if customer is not satisfied with cash back / after max tries our system will redirect the customer's complaint to a human.
+Our Food Complaint Resolution application streamlines this process, reducing both time and human effort in handling complaints. It processes customer complaints in just a few seconds, providing a quicker resolution.
+
+We developed this application with ❤️ using the latest AI models, including Food Item Recognition, GPT-4 Turbo, and GPT-4 Vision, to automate complaint resolution. The system features a user-friendly interface created with the Streamlit library.
+
+The application processes complaints similarly to how a human would, evaluating metadata like complaint descriptions and images. After analyzing the information, our system follows company policies to provide a cash refund to eligible customers. If the customer is dissatisfied with the refund or after multiple attempts, the system redirects the complaint to a human for further assistance.
 
 ### Features
     - Using AI for receiving the complaint reducing the human effort and time
