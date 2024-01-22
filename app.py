@@ -13,6 +13,7 @@ from clarifai_grpc.grpc.api.status import status_code_pb2
 load_dotenv()
 import os
 
+# Load environment variables from .env file
 if "items" not in st.session_state:
     st.session_state["items"] = 0
 
