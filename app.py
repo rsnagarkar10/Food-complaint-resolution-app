@@ -20,15 +20,16 @@ if "items" not in st.session_state:
 
 # Function to get clarifai PAT 
 def getKey():
+    
     clarifai_pat_env = os.getenv("CLARIFAI_PAT")
     clarifai_pat_usr = st.text_input('Clarifai PAT:', type='password')
-        
     if clarifai_pat_env:
         pat = clarifai_pat_env
         return pat
     elif clarifai_pat_usr:
         os.environ['CLARIFAI_PAT'] = clarifai_pat_usr
-        return clarifai_pat_usr
+        clarifai_pat_usr_env = os.getenv("CLARIFAI_PAT")
+        return clarifai_pat_usr_env
     else:
         st.warning('Please enter your PAT to continue!', icon='⚠️')
 
